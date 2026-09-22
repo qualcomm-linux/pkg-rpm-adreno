@@ -9,7 +9,7 @@ Summary:        Qualcomm Adreno userspace GPU driver libraries
 
 License:        LICENSE.qcom-2
 URL:            https://www.qualcomm.com/processors/adreno
-Source0:        %{name}-%{version}-%{source_release}.tar.gz
+Source0:        https://qartifactory-edge.qualcomm.com/artifactory/qsc_releases/software/chip/component/gfx-adreno.le.0.0/260922.1/prebuilt_rpm/%{name}-%{version}_%{source_release}.el10.%{_arch}.tar.gz
 
 ExclusiveArch:  aarch64
 BuildRequires:  patchelf
@@ -86,7 +86,7 @@ Recommends:     kgsl-dkms
 Qualcomm Adreno Vulkan installable client driver and ICD manifest.
 
 %prep
-%autosetup
+%autosetup -n %{name}-%{version}
 
 %build
 # The source archive contains prebuilt ARM64 libraries.
@@ -103,23 +103,24 @@ install -d %{buildroot}%{_libdir}/environment.d
 install -d %{buildroot}%{_libdir}/adreno-common
 install -d %{buildroot}%{_libdir}/adreno-vulkan
 
-install -pm 0755 adreno/usr/lib/libadreno-llvm-glnext.so.1.0.0 %{buildroot}%{_libdir}/adreno/
-install -pm 0755 adreno/usr/lib/libadreno-llvm-qcom.so.1.0.0 %{buildroot}%{_libdir}/adreno/
-install -pm 0755 adreno/usr/lib/libadreno-llvm-qgl.so.1.0.0 %{buildroot}%{_libdir}/adreno/
-install -pm 0755 adreno/usr/lib/libadreno-gsl.so.1.0.0 %{buildroot}%{_libdir}/adreno/
-install -pm 0755 adreno/usr/lib/libadreno-utils.so.1.0.0 %{buildroot}%{_libdir}/adreno/
-install -pm 0755 adreno/usr/lib/libadreno-q3dtools.so.1.0.0 %{buildroot}%{_libdir}/adreno/
-install -pm 0755 adreno/usr/lib/libadreno-q3dtools-esx.so.1.0.0 %{buildroot}%{_libdir}/adreno/
-install -pm 0755 adreno/usr/lib/libadreno-GLESv1-CM.so.1.0.0 %{buildroot}%{_libdir}/adreno/
-install -pm 0755 adreno/usr/lib/libadreno-GLESv2.so.2.0.0 %{buildroot}%{_libdir}/adreno/
-install -pm 0755 adreno/usr/lib/libadreno-EGL.so.1.0.0 %{buildroot}%{_libdir}/adreno/
-install -pm 0755 adreno/usr/lib/libadreno-eglSubDriverWayland.so.1.0.0 %{buildroot}%{_libdir}/adreno/
-install -pm 0755 adreno/usr/lib/libadreno-eglSubDriverX11.so.1.0.0 %{buildroot}%{_libdir}/adreno/
-install -pm 0755 adreno/usr/lib/libadreno-CB.so.1.0.0 %{buildroot}%{_libdir}/adreno/
-install -pm 0755 adreno/usr/lib/libadreno-OpenCL.so.1.0.0 %{buildroot}%{_libdir}/adreno/
-install -pm 0755 adreno/usr/lib/libadreno-vulkan.so.1.0.0 %{buildroot}%{_libdir}/adreno/
+install -pm 0755 usr/lib64/adreno/libadreno-llvm-glnext.so.1.0.0 %{buildroot}%{_libdir}/adreno/
+install -pm 0755 usr/lib64/adreno/libadreno-llvm-qcom.so.1.0.0 %{buildroot}%{_libdir}/adreno/
+install -pm 0755 usr/lib64/adreno/libadreno-llvm-qgl.so.1.0.0 %{buildroot}%{_libdir}/adreno/
+install -pm 0755 usr/lib64/adreno/libadreno-gsl.so.1.0.0 %{buildroot}%{_libdir}/adreno/
+install -pm 0755 usr/lib64/adreno/libadreno-utils.so.1.0.0 %{buildroot}%{_libdir}/adreno/
+install -pm 0755 usr/lib64/adreno/libadreno-q3dtools.so.1.0.0 %{buildroot}%{_libdir}/adreno/
+install -pm 0755 usr/lib64/adreno/libadreno-q3dtools-esx.so.1.0.0 %{buildroot}%{_libdir}/adreno/
+install -pm 0755 usr/lib64/adreno/libadreno-GLESv1-CM.so.1.0.0 %{buildroot}%{_libdir}/adreno/
+install -pm 0755 usr/lib64/adreno/libadreno-GLESv2.so.2.0.0 %{buildroot}%{_libdir}/adreno/
+install -pm 0755 usr/lib64/adreno/libadreno-EGL.so.1.0.0 %{buildroot}%{_libdir}/adreno/
+install -pm 0755 usr/lib64/adreno/libadreno-eglSubDriverWayland.so.1.0.0 %{buildroot}%{_libdir}/adreno/
+install -pm 0755 usr/lib64/adreno/libadreno-eglSubDriverX11.so.1.0.0 %{buildroot}%{_libdir}/adreno/
+install -pm 0755 usr/lib64/adreno/libadreno-CB.so.1.0.0 %{buildroot}%{_libdir}/adreno/
+install -pm 0755 usr/lib64/adreno/libadreno-OpenCL.so.1.0.0 %{buildroot}%{_libdir}/adreno/
+install -pm 0755 usr/lib64/adreno/libadreno-vulkan.so.1.0.0 %{buildroot}%{_libdir}/adreno/
 
-patchelf --set-rpath '$ORIGIN' %{buildroot}%{_libdir}/adreno/*.so.1.0.0
+find %{buildroot}%{_libdir}/adreno -maxdepth 1 -type f -name '*.so*' \
+    -exec patchelf --set-rpath '$ORIGIN' {} +
 
 ln -s libadreno-llvm-glnext.so.1.0.0 %{buildroot}%{_libdir}/adreno/libadreno-llvm-glnext.so.1
 ln -s libadreno-llvm-qcom.so.1.0.0 %{buildroot}%{_libdir}/adreno/libadreno-llvm-qcom.so.1
@@ -139,36 +140,21 @@ ln -s libadreno-vulkan.so.1.0.0 %{buildroot}%{_libdir}/adreno/libadreno-vulkan.s
 ln -s libadreno-CB.so.1 %{buildroot}%{_libdir}/adreno/libadreno-CB.so
 ln -s libadreno-OpenCL.so.1 %{buildroot}%{_libdir}/adreno/libadreno-OpenCL.so
 
-install -pm 0644 include/public/CL/cl_ext_qcom.h %{buildroot}%{_includedir}/CL/
-install -pm 0755 adreno/usr/lib/adreno-common-vars.sh %{buildroot}%{_libdir}/adreno-common-vars.sh
-install -pm 0755 adreno/usr/lib/adreno-vulkan-vars.sh %{buildroot}%{_libdir}/adreno-vulkan-vars.sh
-install -pm 0755 adreno/usr/lib/adreno-common-profile.sh %{buildroot}%{_sysconfdir}/profile.d/
-install -pm 0755 adreno/usr/lib/adreno-vulkan-profile.sh %{buildroot}%{_sysconfdir}/profile.d/
-install -pm 0644 adreno/usr/lib/50-qpa-platform.conf %{buildroot}%{_libdir}/environment.d/50-qpa-platform.conf
-install -pm 0644 adreno/usr/lib/10-adreno-vulkan.conf %{buildroot}%{_libdir}/environment.d/
-install -pm 0644 adreno/usr/lib/10_adreno.json %{buildroot}%{_datadir}/glvnd/egl_vendor.d/
-install -pm 0644 adreno/usr/lib/adrenovk.json %{buildroot}%{_datadir}/vulkan/icd.d/
-install -pm 0644 adreno/usr/lib/adrenocl.icd %{buildroot}%{_sysconfdir}/OpenCL/vendors/
-
-sed -i 's|/usr/lib/aarch64-linux-gnu/adreno|%{_libdir}/adreno|g' \
-    %{buildroot}%{_datadir}/glvnd/egl_vendor.d/10_adreno.json \
-    %{buildroot}%{_datadir}/vulkan/icd.d/adrenovk.json \
-    %{buildroot}%{_sysconfdir}/OpenCL/vendors/adrenocl.icd
-sed -i 's|/usr/lib/adreno-common|%{_libdir}/adreno-common|g' \
-    %{buildroot}%{_sysconfdir}/profile.d/adreno-common-profile.sh
-sed -i 's|/usr/lib/adreno-vulkan|%{_libdir}/adreno-vulkan|g' \
-    %{buildroot}%{_sysconfdir}/profile.d/adreno-vulkan-profile.sh
-mv %{buildroot}%{_libdir}/adreno-common-vars.sh %{buildroot}%{_libdir}/adreno-common/
-mv %{buildroot}%{_libdir}/adreno-vulkan-vars.sh %{buildroot}%{_libdir}/adreno-vulkan/
-
-cat > %{buildroot}%{_udevrulesdir}/60-adreno-opencl-icd.rules <<'EOF'
-# Allow the video group to access the Adreno OpenCL render node.
-ACTION=="add", SUBSYSTEM=="drm", KERNEL=="renderD128", RUN+="/bin/setfacl -m g:video:rw $env{DEVNAME}"
-EOF
+install -pm 0644 usr/include/CL/cl_ext_qcom.h %{buildroot}%{_includedir}/CL/
+install -pm 0755 usr/lib64/adreno-common/adreno-common-vars.sh %{buildroot}%{_libdir}/adreno-common/
+install -pm 0755 usr/lib64/adreno-vulkan/adreno-vulkan-vars.sh %{buildroot}%{_libdir}/adreno-vulkan/
+install -pm 0755 etc/profile.d/adreno-common-profile.sh %{buildroot}%{_sysconfdir}/profile.d/
+install -pm 0755 etc/profile.d/adreno-vulkan-profile.sh %{buildroot}%{_sysconfdir}/profile.d/
+install -pm 0644 usr/lib64/environment.d/50-qpa-platform.conf %{buildroot}%{_libdir}/environment.d/
+install -pm 0644 usr/lib64/environment.d/10-adreno-vulkan.conf %{buildroot}%{_libdir}/environment.d/
+install -pm 0644 usr/share/glvnd/egl_vendor.d/10_adreno.json %{buildroot}%{_datadir}/glvnd/egl_vendor.d/
+install -pm 0644 usr/share/vulkan/icd.d/adrenovk.json %{buildroot}%{_datadir}/vulkan/icd.d/
+install -pm 0644 etc/OpenCL/vendors/adrenocl.icd %{buildroot}%{_sysconfdir}/OpenCL/vendors/
+install -pm 0644 usr/lib/udev/rules.d/60-adreno-opencl-icd.rules %{buildroot}%{_udevrulesdir}/
 
 for package in common gles1 gles2 egl1 opencl-icd opencl-devel vulkan-icd; do
-    install -Dpm 0644 LICENSE %{buildroot}%{_licensedir}/%{name}-${package}/LICENSE
-    install -Dpm 0644 NOTICE %{buildroot}%{_docdir}/%{name}-${package}/NOTICE
+    install -Dpm 0644 usr/share/licenses/%{name}-${package}/LICENSE %{buildroot}%{_licensedir}/%{name}-${package}/LICENSE
+    install -Dpm 0644 usr/share/doc/%{name}-${package}/NOTICE %{buildroot}%{_docdir}/%{name}-${package}/NOTICE
 done
 
 %files common
