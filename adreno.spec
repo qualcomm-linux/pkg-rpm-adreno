@@ -1,6 +1,6 @@
 Name:           adreno
 Version:        1.877.5
-%global source_release 1
+%global source_release 2
 Release:        %{source_release}%{?dist}
 Summary:        Qualcomm Adreno userspace GPU driver libraries
 
@@ -9,7 +9,7 @@ Summary:        Qualcomm Adreno userspace GPU driver libraries
 
 License:        Qualcomm.nologin.binaries.license
 URL:            https://www.qualcomm.com/processors/adreno
-Source0:        https://qartifactory-edge.qualcomm.com/artifactory/qsc_releases/software/chip/component/gfx-adreno.le.0.0/260922.1/prebuilt_rpm/%{name}-%{version}_%{source_release}.el10.%{_arch}.tar.gz
+Source0:        https://qartifactory-edge.qualcomm.com/artifactory/qsc_releases/software/chip/component/gfx-adreno.le.0.0/260922.1/prebuilt_rpm/%{name}-%{version}_1.el10.%{_arch}.tar.gz
 
 ExclusiveArch:  aarch64
 BuildRequires:  patchelf
@@ -215,5 +215,8 @@ done
 %{_datadir}/vulkan/icd.d/adrenovk.json
 
 %changelog
+* Fri Sep 25 2026 Maintainers.pkg-rpm-adreno <Maintainers.pkg-rpm-adreno@qualcomm.com> - 1.877.5-2
+- Update dependencies in spec file.
+
 * Wed Sep 09 2026 Maintainers.pkg-rpm-adreno <Maintainers.pkg-rpm-adreno@qualcomm.com> - 1.877.5-1
 - Package Qualcomm Adreno 1.877.5 prebuilt ARM64 libraries.
