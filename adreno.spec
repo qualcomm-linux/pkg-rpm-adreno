@@ -7,7 +7,7 @@ Summary:        Qualcomm Adreno userspace GPU driver libraries
 # The payload consists of prebuilt libraries with no corresponding debug source.
 %global debug_package %{nil}
 
-License:        LICENSE.qcom-2
+License:        Qualcomm.nologin.binaries.license
 URL:            https://www.qualcomm.com/processors/adreno
 Source0:        https://qartifactory-edge.qualcomm.com/artifactory/qsc_releases/software/chip/component/gfx-adreno.le.0.0/260922.1/prebuilt_rpm/%{name}-%{version}_%{source_release}.el10.%{_arch}.tar.gz
 
@@ -31,8 +31,8 @@ userspace driver.
 Summary:        Qualcomm Adreno OpenGL ES 1 runtime library
 Requires:       %{name}-common%{?_isa} = %{version}-%{release}
 Requires:       libglvnd-gles%{?_isa}
-Recommends:     kgsl-dkms
-# TODO: Map Debian's required libgbm-msm1 to its CentOS package name.
+Requires:       gbm-msm-backend
+Requires:       kgsl-dkms
 
 %description gles1
 Qualcomm Adreno userspace runtime library for OpenGL ES 1.
@@ -41,8 +41,8 @@ Qualcomm Adreno userspace runtime library for OpenGL ES 1.
 Summary:        Qualcomm Adreno OpenGL ES 2 runtime library
 Requires:       %{name}-common%{?_isa} = %{version}-%{release}
 Requires:       libglvnd-gles%{?_isa}
-Recommends:     kgsl-dkms
-# TODO: Map Debian's required libgbm-msm1 to its CentOS package name.
+Requires:       gbm-msm-backend
+Requires:       kgsl-dkms
 
 %description gles2
 Qualcomm Adreno userspace runtime library for OpenGL ES 2.
@@ -53,8 +53,8 @@ Requires:       %{name}-common%{?_isa} = %{version}-%{release}
 Requires:       %{name}-gles1%{?_isa} = %{version}-%{release}
 Requires:       %{name}-gles2%{?_isa} = %{version}-%{release}
 Requires:       libglvnd-egl%{?_isa}
-Recommends:     kgsl-dkms
-# TODO: Map Debian's required libgbm-msm1 to its CentOS package name.
+Requires:       gbm-msm-backend
+Requires:       kgsl-dkms
 
 %description egl1
 Qualcomm Adreno userspace runtime library for EGL.
@@ -79,8 +79,8 @@ Qualcomm Adreno vendor extension header for OpenCL development.
 Summary:        Qualcomm Adreno Vulkan installable client driver
 Requires:       %{name}-common%{?_isa} = %{version}-%{release}
 Requires:       vulkan-loader%{?_isa}
-Recommends:     kgsl-dkms
-# TODO: Map Debian's required libgbm-msm1 to its CentOS package name.
+Requires:       gbm-msm-backend
+Requires:       kgsl-dkms
 
 %description vulkan-icd
 Qualcomm Adreno Vulkan installable client driver and ICD manifest.
@@ -215,5 +215,5 @@ done
 %{_datadir}/vulkan/icd.d/adrenovk.json
 
 %changelog
-* Wed Sep 09 2026 Maintainers.pkg-qcom-adreno <Maintainers.pkg-qcom-adreno@qualcomm.com> - 1.877.5-1
+* Wed Sep 09 2026 Maintainers.pkg-rpm-adreno <Maintainers.pkg-rpm-adreno@qualcomm.com> - 1.877.5-1
 - Package Qualcomm Adreno 1.877.5 prebuilt ARM64 libraries.
